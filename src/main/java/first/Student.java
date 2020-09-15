@@ -1,5 +1,6 @@
 package first;
 
+import second.MyDate;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,7 +22,7 @@ public class Student {
     /**
      * 出生年月
      */
-    private String birthDate;
+    private MyDate myDate;
     /**
      * java实验成绩
      */
