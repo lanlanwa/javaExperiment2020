@@ -80,11 +80,12 @@ public class Conductor implements Runnable {
     public boolean sellTicket(BookingPeople people, int ticketNumbers) {
         Wallet change = sellTicket(people.getWallet().getTotalMoney(), ticketNumbers);
         if (change.isMisMark()) {
+            System.out.println(people.getName() + "顾客交易失败，售票员零钱不足");
             return false;
         }
         people.getWallet().add(change);
         people.setBought(true);
-        System.out.println(people.getName() + "购买了一张票");
+        System.out.println(people.getName() + "顾客购买了一张票");
         return true;
     }
 
@@ -107,28 +108,28 @@ public class Conductor implements Runnable {
                 isSuccess = sellTicket(new BookingPeople("赵", 0, 0, 1), 2);
             } else if ("钱".equals(Thread.currentThread().getName())) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 isSuccess = sellTicket(new BookingPeople("钱", 0, 0, 1), 1);
             } else if ("孙".equals(Thread.currentThread().getName())) {
                 try {
-                    Thread.sleep(20);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 isSuccess = sellTicket(new BookingPeople("孙", 0, 1, 0), 1);
             } else if ("李".equals(Thread.currentThread().getName())) {
                 try {
-                    Thread.sleep(30);
+                    Thread.sleep(15);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 isSuccess = sellTicket(new BookingPeople("李", 0, 1, 0), 2);
             } else if ("周".equals(Thread.currentThread().getName())) {
                 try {
-                    Thread.sleep(40);
+                    Thread.sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
