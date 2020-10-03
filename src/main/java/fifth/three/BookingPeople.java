@@ -1,20 +1,20 @@
 package fifth.three;
 
-import lombok.AllArgsConstructor;
+
+import lombok.Data;
 
 /**
  * @author ZD
  * @date 2020-09-30 14:21
  */
-@AllArgsConstructor
-public class BookingPeople implements Runnable {
-    String name;
-    Integer fiveNumbers;
-    Integer tenNumbers;
-    Integer twentyNumbers;
+@Data
+public class BookingPeople {
+    private String name;
+    private Wallet wallet;
+    boolean isBought = false;
 
-    @Override
-    public void run() {
-
+    public BookingPeople(String name, int fiveNumbers, int tenNumbers, int twentyNumbers) {
+        this.name = name;
+        this.wallet = new Wallet(fiveNumbers, tenNumbers, twentyNumbers);
     }
 }
