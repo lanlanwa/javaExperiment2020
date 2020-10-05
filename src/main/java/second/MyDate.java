@@ -14,11 +14,6 @@ public class MyDate {
     private String month;
     private String day;
 
-    public MyDate(String year, String month, String day) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
-    }
     public MyDate(String birthDate) throws Exception {
         this.birthDate = birthDate;
         // 匹配年月日

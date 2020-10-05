@@ -15,19 +15,24 @@ public class One {
         Scanner sc = new Scanner(System.in);
         List<Student> students = new ArrayList<Student>();
         for (int i = 0; i < 10; i++) {
-            System.out.println("请您输入第" + i + "个学生的姓名、年龄、出生年月日(例:2020-10-10)、java课程成绩（每项请以空格分隔开）");
+            System.out.println("请您输入第" + (i + 1) + "个学生的姓名、年龄、出生年月日(例:2020-10-10)、java课程成绩（每项请以空格分隔开）");
             // 读入学生数据
             String data = sc.nextLine();
             String[] message = data.split(" ");
             try {
+                if (message.length != 4){
+                    throw new Exception("数据个数或格式错误");
+                }
                 students.add(Student.builder()
                         .name(message[0])
                         .age(Integer.valueOf(message[1]))
                         .myDate(new MyDate(message[2]))
                         .grade(Float.valueOf(message[3]))
                         .build());
+            } catch (NumberFormatException e) {
+                System.out.println("成绩类型错误");
+                i--;
             } catch (Exception e) {
-                e.printStackTrace();
                 System.out.println(e.getMessage());
                 i--;
             }
@@ -39,8 +44,8 @@ public class One {
             sumAge += i.getAge();
             sumGrade += i.getGrade();
         }
-        System.out.println("学生年龄平均值为" + sumAge/students.size());
-        System.out.println("学生java成绩平均值为" + sumGrade/students.size());
+        System.out.println("学生年龄平均值为" + sumAge / students.size());
+        System.out.println("学生java成绩平均值为" + sumGrade / students.size());
     }
 
 }
