@@ -15,15 +15,16 @@ import java.util.Scanner;
  */
 public class One {
     public static void main(String[] args) {
+        int amount = 2;
         Scanner sc = new Scanner(System.in);
-        List<Student> students = new ArrayList<Student>();
-        for (int i = 0; i < 10; i++) {
+        List<Student> students = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
             System.out.println("请您输入第" + (i + 1) + "个学生的姓名、年龄、出生年月日(例:2020-10-10)、java课程成绩（每项请以空格分隔开）");
             // 读入学生数据
             String data = sc.nextLine();
             String[] message = data.split(" ");
             try {
-                if (message.length != 4){
+                if (message.length != 4) {
                     throw new Exception("数据个数或格式错误");
                 }
                 students.add(Student.builder()
