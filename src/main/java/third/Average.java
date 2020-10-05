@@ -10,7 +10,7 @@ public interface Average {
      * @param array 数值数组
      * @return 平均分值
      */
-    Double getAverage(int[] array);
+     Double getAverage(float[] array);
 
 
 }

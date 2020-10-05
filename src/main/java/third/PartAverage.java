@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class PartAverage implements Average {
     @Override
-    public Double getAverage(int[] array) {
+    public Double getAverage(float[] array) {
         Arrays.sort(array);
         double average = 0;
         for (int i = 1; i < array.length - 1; i++) {

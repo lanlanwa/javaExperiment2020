@@ -1,6 +1,9 @@
 package first;
 
 import second.MyDate;
+import third.AllAverage;
+import third.Average;
+import third.PartAverage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +41,18 @@ public class One {
             }
         }
         // 求年龄、java成绩平均值
-        Integer sumAge = 0;
-        Float sumGrade = (float) 0;
-        for (Student i : students) {
-            sumAge += i.getAge();
-            sumGrade += i.getGrade();
+        AllAverage allAverage = new AllAverage();
+        PartAverage partAverage = new PartAverage();
+
+        float[] ages = new float[students.size()];
+        float[] grades = new float[students.size()];
+        for (int i = 0; i < students.size(); i++) {
+            ages[i] = students.get(i).getAge();
+            grades[i] = students.get(i).getGrade();
         }
-        System.out.println("学生年龄平均值为" + sumAge / students.size());
-        System.out.println("学生java成绩平均值为" + sumGrade / students.size());
+
+        System.out.println("学生年龄平均值为" + allAverage.getAverage(ages));
+        System.out.println("学生java成绩平均值为" + partAverage.getAverage(grades));
     }
 
 }

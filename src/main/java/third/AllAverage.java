@@ -7,9 +7,9 @@ package third;
  */
 public class AllAverage implements Average {
     @Override
-    public Double getAverage(int[] array) {
+    public Double getAverage(float[] array) {
         double average = 0;
-        for (int i : array) {
+        for (float i : array) {
             average += i;
         }
         return average / array.length;
