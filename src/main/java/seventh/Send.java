@@ -49,7 +49,6 @@ public class Send implements Runnable {
     @Override
     public void run() {
         while (flag) {
-            System.out.println("输入需要发送的数据");
             this.send(sc.next());
         }
     }

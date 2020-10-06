@@ -18,8 +18,8 @@ public class Channel implements Runnable {
     private Scanner sc;
     private DataInputStream dis;
     private DataOutputStream dos;
-    private String password = "111";
     private boolean flag = true;
+    private final String password = "111";
 
     public Channel(Socket socket) {
         try {
@@ -32,11 +32,6 @@ public class Channel implements Runnable {
             CloseUtil.closeAll(dis, dos);
             Server.users.remove(this);
         }
-    }
-
-    public Channel(Socket socket, String password) {
-        this(socket);
-        this.password = password;
     }
 
     public String receive() {
@@ -55,6 +50,7 @@ public class Channel implements Runnable {
         if (str != null && str.length() != 0) {
             try {
                 dos.writeUTF(str);
+                dos.flush();
             } catch (IOException e) {
                 flag = false;
                 CloseUtil.closeAll(dis, dos);
@@ -63,22 +59,43 @@ public class Channel implements Runnable {
         }
     }
 
-    private void sendOther(String receive) {
-        List<Channel> channels = Server.users;
-        for (Channel channel : channels) {
+    private void sendOther() {
+        String str = this.receive();
+        for (Channel channel : Server.users) {
             if (channel == this) {
                 continue;
             }
-            channel.send(receive);
+            channel.send(str);
         }
     }
 
     @Override
     public void run() {
-        while (flag) {
-            System.out.println("请输入口令密码:");
-            this.send(this.receive());
+        // 密码验证
+        int verifyTime = 0;
+        while (verifyTime++ < CommonConstant.VERIFY_MAX_TIME.getIntValue()) {
+//            System.out.println("请输入口令密码:");
+            String password = sc.nextLine();
+            if (verifyPassword(password)) {
+                break;
+            } else {
+                System.out.println(CommonConstant.PASSWORD_WRONG_MSG.getStrValue());
+            }
         }
+        if (verifyTime >= CommonConstant.VERIFY_MAX_TIME.getIntValue()) {
+            System.out.println(CommonConstant.ILLEGAL_MSG.getStrValue());
+            this.close();
+            this.setFlag(false);
+            return;
+        }
+        System.out.println(CommonConstant.SUCCESS_MSG.getStrValue());
+        while (flag) {
+            this.sendOther();
+        }
+    }
+
+    private boolean verifyPassword(String password) {
+        return this.password.equals(password);
     }
 
     public void close() {
