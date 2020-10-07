@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 public class Student extends Person{
     private String sno;
     private MyDate enrolTime;
-    private BigDecimal creditHour;
+    private BigDecimal credit;
 
+    public Student(String name, String idNumber) {
+        super(name, idNumber);
+    }
 }
