@@ -3,11 +3,15 @@ package seventh;
 import lombok.Getter;
 
 @Getter
-public enum CommonConstant {
+public enum CommonConstantEnum {
     /**
-     * 口令匹配成功信息
+     * 服务器连接成功信息
      */
-    SUCCESS_MSG("Verifying Server!"),
+    CONNECT_SUCCESS_MSG("Verifying Server!"),
+    /**
+     * 服务器连接失败信息
+     */
+    CONNECT_FAIL_MSG("Server Wrong!"),
     /**
      * 口令多次匹配失败信息
      */
@@ -29,11 +33,11 @@ public enum CommonConstant {
     String strValue;
     Integer intValue;
 
-    CommonConstant(String  value) {
+    CommonConstantEnum(String  value) {
         this.strValue = value;
     }
 
-    CommonConstant(int value) {
+    CommonConstantEnum(int value) {
         this.intValue = value;
     }
 }

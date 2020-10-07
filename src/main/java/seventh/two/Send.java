@@ -1,4 +1,6 @@
-package seventh;
+package seventh.two;
+
+import seventh.CloseUtil;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
