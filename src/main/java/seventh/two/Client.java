@@ -11,7 +11,7 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
         Socket client = new Socket("localhost", 8099);
-        Channel channel = new Channel(client);
-        new Thread(channel).start();
+        RunableClient runableClient = new RunableClient(client);
+        new Thread(runableClient).start();
     }
 }

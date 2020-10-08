@@ -39,7 +39,7 @@ public class Server {
             return;
         }
 
-//         聊天室功能实现
+        // 聊天室功能实现
         boolean flag = true;
         while (flag) {
             dos.writeUTF(sc.nextLine());

@@ -16,20 +16,19 @@ import java.util.Scanner;
  * @date 2020-10-06 15:17
  */
 public class Server {
-    public static List<Channel> users = new ArrayList<>();
+    public static List<RunableClient> users = new ArrayList<>();
     private static String password = "111";
 
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         ServerSocket serverSocket = new ServerSocket(8099);
 
-        while (true) {
+//        while (true) {
             // 监听服务
             Socket socket = serverSocket.accept();
-            Channel channel = new Channel(socket);
-            users.add(channel);
-
-            new Thread(channel).start();
+            RunableClient client = new RunableClient();
+//            new Thread(client).start();
+            users.add(client);
 
             DataInputStream dis = new DataInputStream(socket.getInputStream());
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
@@ -41,9 +40,11 @@ public class Server {
                 receiveStr = dis.readUTF();
                 if (password.equals(receiveStr)) {
                     dos.writeUTF(CommonConstantEnum.PASSWORD_SUCCESS_MSG.getStrValue());
+                    dos.flush();
                     break;
                 } else {
                     dos.writeUTF(CommonConstantEnum.PASSWORD_WRONG_MSG.getStrValue());
+                    dos.flush();
                 }
             }
             if (verifyTime >= CommonConstantEnum.VERIFY_MAX_TIME.getIntValue()) {
@@ -55,11 +56,12 @@ public class Server {
             // 服务器聊天室功能实现
             while (true) {
                 dos.writeUTF(sc.nextLine());
+                dos.flush();
 
                 receiveStr = dis.readUTF();
                 System.out.println(receiveStr);
             }
 
-        }
+//        }
     }
 }

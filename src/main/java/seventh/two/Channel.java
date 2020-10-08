@@ -66,6 +66,7 @@ public class Channel implements Runnable {
             System.out.println("请输入口令密码");
             password = sc.nextLine();
             dos.writeUTF(password);
+            dos.flush();
             receiveStr = dis.readUTF();
             if (CommonConstantEnum.PASSWORD_SUCCESS_MSG.getStrValue().equals(receiveStr)) {
                 break;
@@ -84,6 +85,8 @@ public class Channel implements Runnable {
         // 客户端聊天室功能实现
         while (true) {
             dos.writeUTF(sc.nextLine());
+            dos.flush();
+
             receiveStr = dis.readUTF();
             System.out.println(receiveStr);
         }

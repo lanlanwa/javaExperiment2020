@@ -5,6 +5,7 @@ import seventh.CommonConstantEnum;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -13,6 +14,15 @@ import java.util.Scanner;
  * @date 2020-10-07 16:14
  */
 public class RunableClient implements Runnable{
+    Socket socket;
+
+    public RunableClient() throws IOException {
+        this.socket = new Socket("localhost", 8099);
+    }
+
+    public RunableClient(Socket socket) {
+        this.socket = socket;
+    }
 
     @SneakyThrows
     @Override
@@ -22,7 +32,6 @@ public class RunableClient implements Runnable{
         String receiveStr;
 
         // 验证连接
-        Socket socket;
         try {
             socket = new Socket("localhost", 8099);
         } catch (Exception e) {
@@ -39,6 +48,7 @@ public class RunableClient implements Runnable{
             System.out.println("请输入口令密码");
             password = sc.nextLine();
             dos.writeUTF(password);
+            dos.flush();
             receiveStr = dis.readUTF();
             if (CommonConstantEnum.PASSWORD_SUCCESS_MSG.getStrValue().equals(receiveStr)) {
                 break;
@@ -58,6 +68,7 @@ public class RunableClient implements Runnable{
         boolean flag = true;
         while (flag) {
             dos.writeUTF(sc.nextLine());
+            dos.flush();
             receiveStr = dis.readUTF();
             System.out.println(receiveStr);
         }
