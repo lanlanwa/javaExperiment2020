@@ -2,7 +2,6 @@ package first;
 
 import second.MyDate;
 import third.AllAverage;
-import third.Average;
 import third.PartAverage;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.Scanner;
  */
 public class One {
     public static void main(String[] args) {
-        int amount = 2;
+        int amount = 10;
         Scanner sc = new Scanner(System.in);
         List<Student> students = new ArrayList<>();
         for (int i = 0; i < amount; i++) {

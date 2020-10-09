@@ -1,5 +1,6 @@
 package seventh.last;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,7 +15,7 @@ public class Server {
     /**
      * 存储在线用户
      */
-    private static Map<String, User> users = new HashMap<>();
+    public static Map<String, User> users = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         // 服务器Socket创建
@@ -22,12 +23,19 @@ public class Server {
         while (true) {
             // 监听客户端连接
             Socket socket = server.accept();
+            // 登录业务实现
             // 接受客户端传来的uid和密码
+            DataInputStream dis = new DataInputStream(socket.getInputStream());
+            String uid = dis.readUTF();
 
-            // 登录业务判断
+            // 用户存入集合
+            User user = new User(uid, socket);
+            Server.users.put(uid, user);
 
-            // 存入集合
-//            Server.users.put(uid, new User(uid, password, socket));
+            // 开启线程服务
+//            new Thread(new ServerReader(socket)).start();
+//            new Thread(new ServerWriter(socket)).start();
+            new Thread(new ServerThread(user)).start();
         }
     }
 }
