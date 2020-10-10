@@ -1,12 +1,11 @@
 package seventh.last;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.net.Socket;
 
 /**
- * 包装用户id和密码
+ * 包装用户信息
  *
  * @author ZD
  * @date 2020-10-08 9:37
@@ -17,10 +16,6 @@ public class User {
      * 用户id
      */
     private String uid;
-    /**
-     * 用户密码
-     */
-    private String password;
     /**
      * 用户名
      */
@@ -34,13 +29,8 @@ public class User {
         this(uid,"",socket);
     }
 
-    public User(String uid, String password, Socket socket) {
-        this(uid,password,"暂无姓名",socket);
-    }
-
-    public User(String uid, String password, String name, Socket socket) {
+    public User(String uid, String name, Socket socket) {
         this.uid = uid;
-        this.password = password;
         this.name = name;
         this.socket = socket;
     }

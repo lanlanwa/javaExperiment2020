@@ -25,21 +25,30 @@ public class ServerThread implements Runnable {
     public void run() {
         try {
             DataInputStream dis = new DataInputStream(this.user.getSocket().getInputStream());
+
+            sendOther("加入了聊天室！");
+            // 聊天室功能实现
             String str;
             while (true) {
                 str = dis.readUTF();
-                System.out.println(this.user.getUid() + "：" + str);
                 // 转发
-                for (User user : Server.users.values()) {
-                    if (user.getSocket() != this.user.getSocket()) {
-                        DataOutputStream dataOutputStream = new DataOutputStream(user.getSocket().getOutputStream());
-                        dataOutputStream.writeUTF(this.user.getName() + "：" + str);
-                        dataOutputStream.flush();
-                    }
-                }
+                sendOther(str);
             }
         } catch (IOException e) {
             System.out.println(this.user.getName() + "下线了");
+        }
+    }
+
+    private void sendOther(String str) throws IOException {
+        // 服务器回显
+        System.out.println(this.user.getUid() + "：" + str);
+        for (User user : Server.users.values()) {
+            if (user.getSocket() == this.user.getSocket()) {
+                continue;
+            }
+            DataOutputStream dataOutputStream = new DataOutputStream(user.getSocket().getOutputStream());
+            dataOutputStream.writeUTF(this.user.getName() + "：" + str);
+            dataOutputStream.flush();
         }
     }
 }
