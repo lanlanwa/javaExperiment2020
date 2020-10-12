@@ -14,7 +14,7 @@ public class EvenNumbersCalculator implements Runnable{
         for (int i = 0; i <= 100; i++) {
             if (0 == i % 2) {
                 numbers.add(i);
-                System.out.println("奇数计算器运行，其一偶数为" + i);
+                System.out.println("偶数计算器运行，其一偶数为" + i);
             }
         }
     }

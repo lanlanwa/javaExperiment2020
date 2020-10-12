@@ -29,7 +29,6 @@ public class SqlTest {
                     System.out.println("请输入需要查询的姓名");
                     String queryValue = scanner.nextLine();
                     sql = "select * from student where name ='" + queryValue + "'";
-//                    sql = "select * from student";
                     rs = sm.executeQuery(sql);
 
                     boolean isExist = false;
@@ -86,9 +85,8 @@ public class SqlTest {
                     break;
                 default:
                     System.out.println("输入错误请重输：");
-                    break;
             }
-            System.out.println("请输入数据进行选择：（0代表结束程序，1代表继续运行程序）");
+            System.out.println("请输入数据进行选择：0代表结束程序，1代表继续运行程序");
             i = scanner.nextLine();
             if ("0".equals(i)) {
                 break;

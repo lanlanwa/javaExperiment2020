@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class One {
     public static void main(String[] args) {
-        int amount = 10;
+        int amount = 3;
         Scanner sc = new Scanner(System.in);
         List<Student> students = new ArrayList<>();
         for (int i = 0; i < amount; i++) {

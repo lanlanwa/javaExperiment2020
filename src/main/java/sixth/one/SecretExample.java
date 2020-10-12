@@ -29,7 +29,7 @@ public class SecretExample {
             out.close();
 
             //创建指向fileontwo的字符输入流
-            in = new FileReader("./src/main/java/sixth/one/hello.secret");
+            in = new FileReader(filetwo);
             System.out.println("加密后的文件内容：");
             n = in.read(b);
             while (n != -1) {
