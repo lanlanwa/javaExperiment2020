@@ -43,15 +43,12 @@ public class Wallet {
     public boolean add(int fiveNumbers, int tenNumbers, int twentyNumbers) {
         // 判断能否售票员现有票数是否充足
         if (fiveNumbers < 0 && Math.abs(fiveNumbers) > this.fiveNumbers) {
-//            System.out.println("交易错误，钱包票数不足");
             return false;
         }
         if (tenNumbers < 0 && Math.abs(tenNumbers) > this.tenNumbers) {
-//            System.out.println("交易错误，钱包票数不足");
             return false;
         }
         if (twentyNumbers < 0 && Math.abs(twentyNumbers) > this.twentyNumbers) {
-//            System.out.println("交易错误，钱包票数不足");
             return false;
         }
         this.fiveNumbers += fiveNumbers;

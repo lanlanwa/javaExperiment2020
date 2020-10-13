@@ -92,48 +92,110 @@ public class Conductor implements Runnable {
     public static void main(String[] args) {
 
         Conductor conductor = new Conductor(1, 0, 0);
-        new Thread(conductor, "赵").start();
-        new Thread(conductor, "钱").start();
-        new Thread(conductor, "孙").start();
-        new Thread(conductor, "李").start();
-        new Thread(conductor, "周").start();
+        Thread zhao = new Thread(conductor, "赵");
+        Thread qian = new Thread(conductor, "钱");
+        Thread sun = new Thread(conductor, "孙");
+        Thread li = new Thread(conductor, "李");
+        Thread zhou = new Thread(conductor, "周");
+        zhao.setPriority(10);
+        qian.setPriority(9);
+        sun.setPriority(8);
+        li.setPriority(7);
+        zhou.setPriority(6);
+
+        zhao.start();
+        while (true) {
+            if (Thread.State.WAITING.equals(zhao.getState()) || Thread.State.TERMINATED.equals(zhao.getState())) {
+                qian.start();
+                break;
+            }
+        }
+        while (true) {
+            if (Thread.State.WAITING.equals(qian.getState()) || Thread.State.TERMINATED.equals(qian.getState())) {
+                sun.start();
+                break;
+            }
+        }
+        while (true) {
+            if (Thread.State.WAITING.equals(sun.getState()) || Thread.State.TERMINATED.equals(sun.getState())) {
+                li.start();
+                break;
+            }
+        }
+        while (true) {
+            if (Thread.State.WAITING.equals(li.getState()) || Thread.State.TERMINATED.equals(li.getState())) {
+                zhou.start();
+                break;
+            }
+
+        }
+
 
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
+        buyTicket();
+    }
+
+    private void buyTicket() {
         boolean isSuccess = false;
         while (!isSuccess) {
             if ("赵".equals(Thread.currentThread().getName())) {
                 isSuccess = sellTicket(new BookingPeople("赵", 0, 0, 1), 2);
+                if (!isSuccess) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    this.notifyAll();
+                }
             } else if ("钱".equals(Thread.currentThread().getName())) {
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 isSuccess = sellTicket(new BookingPeople("钱", 0, 0, 1), 1);
+                if (!isSuccess) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    this.notifyAll();
+                }
             } else if ("孙".equals(Thread.currentThread().getName())) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 isSuccess = sellTicket(new BookingPeople("孙", 0, 1, 0), 1);
+                if (!isSuccess) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    this.notifyAll();
+                }
             } else if ("李".equals(Thread.currentThread().getName())) {
-                try {
-                    Thread.sleep(15);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 isSuccess = sellTicket(new BookingPeople("李", 0, 1, 0), 2);
-            } else if ("周".equals(Thread.currentThread().getName())) {
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (!isSuccess) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    this.notifyAll();
                 }
+            } else if ("周".equals(Thread.currentThread().getName())) {
                 isSuccess = sellTicket(new BookingPeople("周", 1, 0, 0), 1);
+                if (!isSuccess) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    this.notifyAll();
+                }
             }
         }
     }
