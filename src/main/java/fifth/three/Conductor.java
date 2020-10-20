@@ -104,32 +104,10 @@ public class Conductor implements Runnable {
         zhou.setPriority(6);
 
         zhao.start();
-        while (true) {
-            if (Thread.State.WAITING.equals(zhao.getState()) || Thread.State.TERMINATED.equals(zhao.getState())) {
-                qian.start();
-                break;
-            }
-        }
-        while (true) {
-            if (Thread.State.WAITING.equals(qian.getState()) || Thread.State.TERMINATED.equals(qian.getState())) {
-                sun.start();
-                break;
-            }
-        }
-        while (true) {
-            if (Thread.State.WAITING.equals(sun.getState()) || Thread.State.TERMINATED.equals(sun.getState())) {
-                li.start();
-                break;
-            }
-        }
-        while (true) {
-            if (Thread.State.WAITING.equals(li.getState()) || Thread.State.TERMINATED.equals(li.getState())) {
-                zhou.start();
-                break;
-            }
-
-        }
-
+        judgeThreadStateToStart(zhao, qian);
+        judgeThreadStateToStart(qian, sun);
+        judgeThreadStateToStart(sun, li);
+        judgeThreadStateToStart(li, zhou);
 
     }
 
@@ -196,6 +174,23 @@ public class Conductor implements Runnable {
                 } else {
                     this.notifyAll();
                 }
+            }
+        }
+    }
+
+    /**
+     * 优先级判断方法包装
+     * @param upper:
+     * @param lower:
+     * @return
+     * @author ZD
+     * @date 2020-10-20
+     */
+    private static void judgeThreadStateToStart(Thread upper, Thread lower) {
+        while (true) {
+            if (Thread.State.WAITING.equals(upper.getState()) || Thread.State.TERMINATED.equals(upper.getState())) {
+                lower.start();
+                return;
             }
         }
     }
